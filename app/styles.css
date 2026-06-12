@@ -1,0 +1,212 @@
+:root {
+  --bg-color: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  
+  --primary-color: #3b82f6;
+
+  /* Status Colors */
+  --status-active-bg: #dcfce7;
+  --status-active-text: #166534;
+  --status-completed-bg: #e0e7ff;
+  --status-completed-text: #3730a3;
+  --status-delayed-bg: #fee2e2;
+  --status-delayed-text: #991b1b;
+  --status-planning-bg: #fef9c3;
+  --status-planning-text: #854d0e;
+
+  /* Priority Colors */
+  --priority-high-bg: #ffe4e6;
+  --priority-high-text: #be123c;
+  --priority-medium-bg: #ffedd5;
+  --priority-medium-text: #c2410c;
+  --priority-low-bg: #f1f5f9;
+  --priority-low-text: #475569;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  --border-radius: 12px;
+  --border-radius-sm: 6px;
+  --transition-speed: 0.2s;
+  
+  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header */
+.dashboard-header {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+}
+
+.dashboard-header p {
+  margin: 0.5rem 0 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Dashboard Grid */
+.dashboard {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Project Card */
+.project-card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover, .project-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.project-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.project-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.project-owner {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0.5rem 0 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.project-owner::before {
+  content: "👤";
+  margin-right: 0.375rem;
+  font-size: 0.8rem;
+}
+
+/* Project Meta (Badges container) */
+.project-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+/* Status variants */
+.status-active { background-color: var(--status-active-bg); color: var(--status-active-text); }
+.status-completed { background-color: var(--status-completed-bg); color: var(--status-completed-text); }
+.status-delayed { background-color: var(--status-delayed-bg); color: var(--status-delayed-text); }
+.status-planning { background-color: var(--status-planning-bg); color: var(--status-planning-text); }
+.status-default { background-color: var(--border-color); color: var(--text-secondary); }
+
+/* Priority variants */
+.priority-high { background-color: var(--priority-high-bg); color: var(--priority-high-text); }
+.priority-medium { background-color: var(--priority-medium-bg); color: var(--priority-medium-text); }
+.priority-low { background-color: var(--priority-low-bg); color: var(--priority-low-text); }
+
+/* Activity Section */
+.project-activity {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.project-activity-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Loading, Empty State, Error Handling */
+.dashboard-loading, .dashboard-empty, .dashboard-error {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  border: 2px dashed var(--border-color);
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+}
+
+.dashboard-error {
+  border-color: var(--status-delayed-text);
+  color: var(--status-delayed-text);
+  background-color: var(--status-delayed-bg);
+  border-style: solid;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .dashboard {
+    padding: 0 1rem 2rem;
+    grid-template-columns: 1fr;
+  }
+}

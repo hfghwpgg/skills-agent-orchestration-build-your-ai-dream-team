@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #0f172a;
+        --panel: #111827;
+        --card: #1f2937;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --border: rgba(148, 163, 184, 0.18);
+        --shadow: 0 20px 50px rgba(2, 6, 23, 0.35);
+        --accent: #38bdf8;
+        --good: #22c55e;
+        --warn: #f59e0b;
+        --high: #ef4444;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(56, 189, 248, 0.18), transparent 34%),
+          linear-gradient(180deg, #020617 0%, var(--bg) 100%);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      .dashboard {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 20px 56px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        line-height: 1.05;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        max-width: 62ch;
+      }
+
+      .status-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 24px 0 32px;
+      }
+
+      .status-pill {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: rgba(15, 23, 42, 0.66);
+        color: var(--text);
+        font-size: 0.92rem;
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+
+      .project-card {
+        background: linear-gradient(180deg, rgba(31, 41, 55, 0.98), rgba(17, 24, 39, 0.98));
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 20px;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .project-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .project-name {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .project-owner {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        border: 1px solid transparent;
+      }
+
+      .badge.status {
+        background: rgba(56, 189, 248, 0.12);
+        color: #7dd3fc;
+        border-color: rgba(56, 189, 248, 0.24);
+      }
+
+      .badge.priority-low {
+        background: rgba(34, 197, 94, 0.12);
+        color: #86efac;
+        border-color: rgba(34, 197, 94, 0.24);
+      }
+
+      .badge.priority-medium {
+        background: rgba(245, 158, 11, 0.12);
+        color: #fcd34d;
+        border-color: rgba(245, 158, 11, 0.24);
+      }
+
+      .badge.priority-high {
+        background: rgba(239, 68, 68, 0.12);
+        color: #fca5a5;
+        border-color: rgba(239, 68, 68, 0.24);
+      }
+
+      .card-section {
+        display: grid;
+        gap: 6px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .value {
+        margin: 0;
+        color: var(--text);
+        line-height: 1.45;
+      }
+
+      .empty-state,
+      .error-state {
+        padding: 24px;
+        border-radius: 18px;
+        border: 1px dashed var(--border);
+        color: var(--muted);
+        background: rgba(15, 23, 42, 0.55);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="dashboard">
+      <section class="hero">
+        <div class="eyebrow">Project Pulse</div>
+        <h1>Project health at a glance</h1>
+        <p class="subtitle">
+          Track ownership, current status, recent activity, and priority across active
+          workstreams.
+        </p>
+      </section>
+
+      <section class="status-bar" aria-label="Dashboard summary">
+        <div class="status-pill">Live project dashboard</div>
+        <div class="status-pill">Status, activity, and priority in one view</div>
+        <div class="status-pill">Loaded from project-data.json</div>
+      </section>
+
+      <section id="project-grid" class="project-grid" aria-live="polite">
+        <div class="empty-state">Loading projects…</div>
+      </section>
+    </main>
+
+    <script>
+      const grid = document.getElementById('project-grid');
+
+      function escapeText(value) {
+        return String(value ?? '').trim() || 'Not provided';
+      }
+
+      function priorityClass(priority) {
+        const normalized = escapeText(priority).toLowerCase();
+        if (normalized.includes('high')) return 'priority-high';
+        if (normalized.includes('low')) return 'priority-low';
+        return 'priority-medium';
+      }
+
+      function createCard(project) {
+        const card = document.createElement('article');
+        card.className = 'project-card';
+
+        const top = document.createElement('div');
+        top.className = 'project-top';
+
+        const titleWrap = document.createElement('div');
+        const name = document.createElement('h2');
+        name.className = 'project-name';
+        name.textContent = escapeText(project.name);
+
+        const owner = document.createElement('p');
+        owner.className = 'project-owner';
+        owner.textContent = `Owner: ${escapeText(project.owner)}`;
+
+        titleWrap.append(name, owner);
+
+        const badgeRow = document.createElement('div');
+        badgeRow.className = 'badge-row';
+
+        const status = document.createElement('span');
+        status.className = 'badge status';
+        status.textContent = escapeText(project.status);
+
+        const priority = document.createElement('span');
+        priority.className = `badge ${priorityClass(project.priority)}`;
+        priority.textContent = `Priority: ${escapeText(project.priority)}`;
+
+        badgeRow.append(status, priority);
+        top.append(titleWrap, badgeRow);
+
+        const activitySection = document.createElement('div');
+        activitySection.className = 'card-section';
+
+        const activityLabel = document.createElement('div');
+        activityLabel.className = 'label';
+        activityLabel.textContent = 'Recent activity';
+
+        const activityValue = document.createElement('p');
+        activityValue.className = 'value';
+        activityValue.textContent = escapeText(project.recentActivity);
+
+        activitySection.append(activityLabel, activityValue);
+        card.append(top, activitySection);
+
+        return card;
+      }
+
+      async function renderProjects() {
+        try {
+          const response = await fetch('project-data.json', { cache: 'no-store' });
+          if (!response.ok) {
+            throw new Error(`Request failed with ${response.status}`);
+          }
+
+          const data = await response.json();
+          const projects = Array.isArray(data.projects) ? data.projects : [];
+
+          grid.innerHTML = '';
+
+          if (!projects.length) {
+            const empty = document.createElement('div');
+            empty.className = 'empty-state';
+            empty.textContent = 'No projects available.';
+            grid.append(empty);
+            return;
+          }
+
+          for (const project of projects) {
+            grid.append(createCard(project));
+          }
+        } catch (error) {
+          grid.innerHTML = '';
+          const message = document.createElement('div');
+          message.className = 'error-state';
+          message.textContent = `Unable to load project data. ${error.message}`;
+          grid.append(message);
+        }
+      }
+
+      renderProjects();
+    </script>
+  </body>
+</html>

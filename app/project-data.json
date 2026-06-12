@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "name": "Dashboard Refresh",
+      "owner": "Mina Patel",
+      "status": "On Track",
+      "recentActivity": "Completed a pass on responsive card spacing and checked data loading against the latest mock payload.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Release Notes Workflow",
+      "owner": "Jordan Lee",
+      "status": "At Risk",
+      "recentActivity": "Blocked while waiting on final copy review before publishing the release summary.",
+      "priority": "High"
+    },
+    {
+      "name": "Automation Cleanup",
+      "owner": "Priya Singh",
+      "status": "Stable",
+      "recentActivity": "Removed stale scripts and verified the run configuration opens the dashboard directly.",
+      "priority": "Low"
+    }
+  ]
+}
